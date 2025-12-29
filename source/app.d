@@ -23,10 +23,11 @@ void main(string[] args)
     }
 
     string profile = args[1];
+    string homeDir = Environment.get("HOME");
     
     try {
         // 读取配置文件
-        string configPath = buildPath(Environment.get("HOME"), ".config", "ai-switch.json");
+        string configPath = buildPath(homeDir, ".config", "ai-switch.json");
         
         if (!exists(configPath)) {
             // 创建默认配置文件
@@ -36,7 +37,7 @@ void main(string[] args)
         Config config = loadConfig(configPath, profile);
         
         // 更新 Claude settings.json
-        string claudeSettingsPath = buildPath(Environment.get("HOME"), ".claude", "settings.json");
+        string claudeSettingsPath = buildPath(homeDir, ".claude", "settings.json");
         updateClaudeSettings(claudeSettingsPath, config);
         
         writeln("✓ Switched to profile: ", profile);
@@ -50,18 +51,20 @@ void main(string[] args)
 
 /// Creates a default configuration file with sample profiles
 void createDefaultConfig(string configPath) {
-    JSONValue config = parseJSON("{
-        \"profiles\": {
-            \"ikun\": {
-                \"baseUrl\": \"https://api.ikuncode.cc\",
-                \"authToken\": \"your-ikun-token-here\"
-            },
-            \"yes\": {
-                \"baseUrl\": \"https://co.yes.vg\",
-                \"authToken\": \"your-yes-token-here\"
+    JSONValue config = parseJSON(q{
+        {
+            "profiles": {
+                "ikun": {
+                    "baseUrl": "https://api.ikuncode.cc",
+                    "authToken": "your-ikun-token-here"
+                },
+                "yes": {
+                    "baseUrl": "https://co.yes.vg",
+                    "authToken": "your-yes-token-here"
+                }
             }
         }
-    }");
+    });
     
     mkdirRecurse(dirName(configPath));
     std.file.write(configPath, config.toPrettyString(JSONOptions.doNotEscapeSlashes));
