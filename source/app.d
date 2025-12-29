@@ -46,6 +46,8 @@ void main(string[] args)
         
     } catch (Exception e) {
         writeln("Error: ", e.msg);
+        writeln("\nStacktrace:");
+        writeln(e.toString());
     }
 }
 
