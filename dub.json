@@ -2,8 +2,8 @@
 	"authors": [
 		"deepin"
 	],
-	"copyright": "Copyright © 2025, deepin",
-	"description": "A minimal D application.",
+	"copyright": "Copyright © 2025, electricface",
+	"description": "A D language CLI tool for managing and switching between different Claude API configuration profiles.",
 	"license": "GPL-3.0-or-later",
 	"name": "claude-switch"
 }
